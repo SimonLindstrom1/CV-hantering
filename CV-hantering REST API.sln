@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CV-hantering REST API", "CV-hantering REST API.csproj", "{4196272E-9481-4D9B-838B-E3E50E59880E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4196272E-9481-4D9B-838B-E3E50E59880E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4196272E-9481-4D9B-838B-E3E50E59880E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4196272E-9481-4D9B-838B-E3E50E59880E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4196272E-9481-4D9B-838B-E3E50E59880E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9CC0FF3-78D7-4AFC-AC02-7891C9EFE6DA}
+	EndGlobalSection
+EndGlobal
