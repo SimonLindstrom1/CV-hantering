@@ -5,7 +5,7 @@ namespace CV_hantering_REST_API.DTOs
     public class CreateWorkExperienceDTO
     {
         [ForeignKey("User")]
-        public required int UserIdFk { get; set; }
+        public required int UserIdFK { get; set; }
         public required string JobTitle { get; set; }
         public required string Employer { get; set; }
         public string? Description { get; set; }

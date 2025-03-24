@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using CV_hantering_REST_API.Models;
 
 namespace CV_hantering_REST_API.Data
 {

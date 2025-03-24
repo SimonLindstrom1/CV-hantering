@@ -1,6 +1,7 @@
 ﻿using CV_hantering_REST_API.Data;
 using CV_hantering_REST_API.DTOs;
 using Microsoft.EntityFrameworkCore;
+using CV_hantering_REST_API.Models;
 
 namespace CV_hantering_REST_API.Services
 {
@@ -17,5 +18,19 @@ namespace CV_hantering_REST_API.Services
 
             return UserList;
         }
+        public async Task<UserDTO> GetUserById(int id)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return null;
+            }
+            return new UserDTO
+            {
+                id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+        }         
     }
 }

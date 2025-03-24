@@ -7,16 +7,22 @@ namespace CV_hantering_REST_API.Models
     {
         [Key]
         public int Id { get; set; }
-        
+
         [ForeignKey("User")]
-        public int UserIdFK { get; set; }
+        public int? UserIdFK { get; set; }
 
+        [Required]
+        public string School { get; set; }
 
-        public required string School { get; set; }
         public string? Degree { get; set; }
-        
+
         public string? FieldOfStudy { get; set; }
-        public required DateOnly StartDate { get; set; }
+
+        [Required]
+        public DateOnly StartDate { get; set; }
+
         public DateOnly? EndDate { get; set; }
+
+        public virtual User? User { get; set; }
     }
 }

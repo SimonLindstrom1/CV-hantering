@@ -8,7 +8,7 @@ namespace CV_hantering_REST_API.Models
         [Key]
         public int Id { get; set; }
         [ForeignKey("User")]
-        public required int UserIdFk { get; set; }
+        public required int UserIdFK { get; set; }
         public required string JobTitle { get; set; }
         public required string Employer { get; set; }
         public string? Description { get; set; }
