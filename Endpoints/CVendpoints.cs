@@ -71,6 +71,27 @@ namespace CV_hantering_REST_API.Endpoints
 
                 return Results.Ok(response);
             });
+            app.MapPut("/Education", async (UpdateEducationDTO updatedEducation, EducationService educationService) =>
+            {
+                var validationContext = new ValidationContext(updatedEducation);
+                var validationResult = new List<ValidationResult>();
+
+                bool isValid = Validator.TryValidateObject(updatedEducation, validationContext, validationResult, true);
+
+                if (!isValid)
+                {
+                    return Results.BadRequest(validationResult.Select(vr => vr.ErrorMessage));
+                }
+
+                var response = await educationService.UpdateEducation(updatedEducation);
+
+                if (response == null)
+                {
+                    return Results.NotFound("Education not found.");
+                }
+
+                return Results.Ok(response);
+            });
         }
     }
 }

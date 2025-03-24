@@ -68,5 +68,30 @@ namespace CV_hantering_REST_API.Services
                 EndDate = education.EndDate
             };
         }
+        public async Task<EducationDTO?> UpdateEducation(UpdateEducationDTO updatedEducation)
+        {
+            var education = await context.Educations.FindAsync(updatedEducation.Id);
+            if (education == null)
+            {
+                return null;
+            }
+
+            education.School = updatedEducation.School;
+            education.Degree = updatedEducation.Degree;
+            education.StartDate = updatedEducation.StartDate;
+            education.EndDate = updatedEducation.EndDate;
+            education.UserIdFK = updatedEducation.UserIdFK;
+
+            await context.SaveChangesAsync();
+
+            return new EducationDTO
+            {
+                Id = education.Id,
+                SchoolName = education.School,
+                Degree = education.Degree,
+                StartDate = education.StartDate,
+                EndDate = education.EndDate
+            };
+        }
     }
 }
