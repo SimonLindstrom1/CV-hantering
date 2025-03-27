@@ -1,3 +1,6 @@
+using CV_hantering_REST_API;
+using CV_hantering_REST_API.Endpoints;
+using CV_hantering_REST_API.Services;
 
 namespace CV_hantering_REST_API
 {
@@ -9,10 +12,14 @@ namespace CV_hantering_REST_API
 
             // Add services to the container.
             builder.Services.AddAuthorization();
-
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Register GitHubService with HttpClient
+            builder.Services.AddHttpClient<GitHubServices>(client =>
+            {
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("request");
+            });
 
             var app = builder.Build();
 
@@ -24,28 +31,10 @@ namespace CV_hantering_REST_API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-            var summaries = new[]
-            {
-                "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            };
-
-            app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    {
-                        Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                        TemperatureC = Random.Shared.Next(-20, 55),
-                        Summary = summaries[Random.Shared.Next(summaries.Length)]
-                    })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast")
-            .WithOpenApi();
+            // Register endpoints
+            CVendpoints.RegisterEndpoints(app);
 
             app.Run();
         }

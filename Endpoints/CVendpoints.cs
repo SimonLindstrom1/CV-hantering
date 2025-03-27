@@ -110,6 +110,11 @@ namespace CV_hantering_REST_API.Endpoints
                 }
                 return Results.NoContent();
             });
+            app.MapGet("/github/{username}", async (GitHubServices gitHubService, string username) =>
+            {
+                var repositories = await gitHubService.GetRepositoriesByUsername(username);
+                return Results.Ok(repositories);
+            });
         }
     }
 }
