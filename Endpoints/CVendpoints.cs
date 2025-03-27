@@ -3,8 +3,7 @@ using CV_hantering_REST_API.DTOs;
 using CV_hantering_REST_API.Data;
 using CV_hantering_REST_API.Models;
 using System.ComponentModel.DataAnnotations;
-
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace CV_hantering_REST_API.Endpoints
 {
@@ -12,23 +11,27 @@ namespace CV_hantering_REST_API.Endpoints
     {
         public static void RegisterEndpoints(WebApplication app)
         {
-           app.MapGet("GetAllEducations", async (EducationService educationService) =>
-           {
-               return await educationService.GetAllEducations();
-           });
-            app.MapGet("GetAllExperiences", async (WorkExperienceService experienceService) =>
+            app.MapGet("GetAllEducations", async ([FromServices] EducationService educationService) =>
+            {
+                return await educationService.GetAllEducations();
+            });
+
+            app.MapGet("GetAllExperiences", async ([FromServices] WorkExperienceService experienceService) =>
             {
                 return await experienceService.GetAllWorkExperiences();
             });
-            app.MapGet("GetAllUsers", async (UserService userService) =>
+
+            app.MapGet("GetAllUsers", async ([FromServices] UserService userService) =>
             {
                 return await userService.GetAllUsers();
             });
-            app.MapGet("/user/{id}", async (UserService userService, int id) =>
+
+            app.MapGet("/user/{id}", async ([FromServices] UserService userService, int id) =>
             {
                 return await userService.GetUserById(id);
             });
-            app.MapPost("/Education", async (CreateEducationDTO newEducation, CVhanteringDBContext context) =>
+
+            app.MapPost("/Education", async ([FromBody] CreateEducationDTO newEducation, [FromServices] CVhanteringDBContext context) =>
             {
                 var validationContext = new ValidationContext(newEducation);
                 var validationResult = new List<ValidationResult>();
@@ -53,9 +56,9 @@ namespace CV_hantering_REST_API.Endpoints
                 await context.SaveChangesAsync();
 
                 return Results.Ok(education);
-
             });
-            app.MapPost("/WorkExperience", async (CreateWorkExperienceDTO newWorkExperience, WorkExperienceService workExperienceService) =>
+
+            app.MapPost("/WorkExperience", async ([FromBody] CreateWorkExperienceDTO newWorkExperience, [FromServices] WorkExperienceService workExperienceService) =>
             {
                 var validationContext = new ValidationContext(newWorkExperience);
                 var validationResult = new List<ValidationResult>();
@@ -71,7 +74,8 @@ namespace CV_hantering_REST_API.Endpoints
 
                 return Results.Ok(response);
             });
-            app.MapPut("/Education", async (UpdateEducationDTO updatedEducation, EducationService educationService) =>
+
+            app.MapPut("/Education", async ([FromBody] UpdateEducationDTO updatedEducation, [FromServices] EducationService educationService) =>
             {
                 var validationContext = new ValidationContext(updatedEducation);
                 var validationResult = new List<ValidationResult>();
@@ -92,25 +96,19 @@ namespace CV_hantering_REST_API.Endpoints
 
                 return Results.Ok(response);
             });
-            app.MapDelete("/WorkExperience/{id}", async (int id, WorkExperienceService workExperienceService) =>
+
+            app.MapDelete("/WorkExperience/{id}", async ([FromServices] WorkExperienceService workExperienceService, int id) =>
             {
-                var response = await workExperienceService.DeleteWorkExperience(id);
-                if (!response)
+                var result = await workExperienceService.DeleteWorkExperience(id);
+                if (!result)
                 {
                     return Results.NotFound("Work experience not found.");
                 }
+
                 return Results.NoContent();
             });
-            app.MapDelete("/Education/{id}", async (int id, EducationService educationService) =>
-            {
-                var response = await educationService.DeleteEducation(id);
-                if (!response)
-                {
-                    return Results.NotFound("Education not found.");
-                }
-                return Results.NoContent();
-            });
-            app.MapGet("/github/{username}", async (GitHubServices gitHubService, string username) =>
+
+            app.MapGet("/github/{username}", async ([FromServices] GitHubServices gitHubService, string username) =>
             {
                 var repositories = await gitHubService.GetRepositoriesByUsername(username);
                 return Results.Ok(repositories);
