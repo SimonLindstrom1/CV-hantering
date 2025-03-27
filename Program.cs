@@ -1,3 +1,6 @@
+using CV_hantering_REST_API.Data;
+using CV_hantering_REST_API.DTOs;
+using CV_hantering_REST_API.Models;
 using CV_hantering_REST_API;
 using CV_hantering_REST_API.Endpoints;
 using CV_hantering_REST_API.Services;
@@ -26,6 +29,7 @@ namespace CV_hantering_REST_API
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
