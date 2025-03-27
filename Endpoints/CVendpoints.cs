@@ -92,6 +92,24 @@ namespace CV_hantering_REST_API.Endpoints
 
                 return Results.Ok(response);
             });
+            app.MapDelete("/WorkExperience/{id}", async (int id, WorkExperienceService workExperienceService) =>
+            {
+                var response = await workExperienceService.DeleteWorkExperience(id);
+                if (!response)
+                {
+                    return Results.NotFound("Work experience not found.");
+                }
+                return Results.NoContent();
+            });
+            app.MapDelete("/Education/{id}", async (int id, EducationService educationService) =>
+            {
+                var response = await educationService.DeleteEducation(id);
+                if (!response)
+                {
+                    return Results.NotFound("Education not found.");
+                }
+                return Results.NoContent();
+            });
         }
     }
 }

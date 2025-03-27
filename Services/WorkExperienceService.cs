@@ -53,5 +53,17 @@ namespace CV_hantering_REST_API.Services
                 EndDate = workExperience.EndDate
             };
         }
+        public async Task<bool> DeleteWorkExperience(int id)
+        {
+            var workExperience = await context.WorkExperiences.FindAsync(id);
+            if (workExperience == null)
+            {
+                return false;
+            }
+
+            context.WorkExperiences.Remove(workExperience);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }

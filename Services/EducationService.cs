@@ -93,5 +93,16 @@ namespace CV_hantering_REST_API.Services
                 EndDate = education.EndDate
             };
         }
+        public async Task<bool> DeleteEducation(int id)
+        {
+            var education = await context.Educations.FindAsync(id);
+            if (education == null)
+            {
+                return false;
+            }
+            context.Educations.Remove(education);
+            await context.SaveChangesAsync();
+            return true;
+        }
     }
 }
